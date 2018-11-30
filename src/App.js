@@ -1,28 +1,31 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import $ from 'jquery';
+//import $ from 'jquery';
 
 class App extends Component {
 
     state = {
-        response: null
+        response: "null",
+        isLoading: true
     }
 
     componentWillMount() {
 
-        var url = 'http://localhost:3000/say'
+        var url = 'http://localhost:3001/say'
 
         const requestBody = {
-             name:'Pippo'
+             Name:'Pippo'
         }
         console.log("Json: " + JSON.stringify(requestBody))
+        /*
         const config = {
             headers: {
                 //'Content-Type': 'application/x-www-form-urlencoded'
                 'Content-Type': 'application/json'
             }
-        }
+        }*/
 
+        /*
         //Send Json
         $.ajax({
             //url: 'http://localhost:3000/say',
@@ -38,6 +41,7 @@ class App extends Component {
                 this.setState({data})
             },
             */
+        /*
             data: JSON.stringify(requestBody)
             //data: requestBody
         }).then(function (data) {
@@ -46,6 +50,7 @@ class App extends Component {
                 alert(data);
                 this.setState({data})
             });
+            */
 
         // Send application/x-www-form-urlencoded
 
@@ -73,19 +78,23 @@ class App extends Component {
         });
         */
 
-        /*
-        axios.post(url, requestBody, config)
+
+        axios.post(url, JSON.stringify(requestBody))
             .then((result) => {
                 const response = result.data;
-                console.log(response)
-                alert(response);
-                this.setState({response})
+                console.log("Risposta: " + response.Response)
+                const obj = response.Response
+                this.setState({
+                    response: obj,
+                    isLoading: false
+                })
+                console.log("Loading: " + this.state.response)
             })
             .catch((err) => {
-                console.log(err)
+                console.log("Errore: " + err.response.data)
             })
 
-        /*
+
 
         /*
         axios.post('http://localhost:3000/say', {params: {
@@ -103,27 +112,32 @@ class App extends Component {
     }
 
     componentDidMount() {
-        console.log(this.state.response)
+        console.log("Response: " + this.state.response)
     }
 
     render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload. {this.state.response}
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+        if (this.state.isLoading){
+            return(this.state.isLoading &&
+                <i className="fa fa-spinner fa-spin"></i>
+            )
+        }else
+            return(!this.state.isLoading &&
+                <div className="App">
+                <header className="App-header">
+                  <p>
+                    {this.state.response}
+                  </p>
+                  <a
+                    className="App-link"
+                    href="https://reactjs.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Learn React
+                  </a>
+                </header>
+              </div>
+            );
   }
 }
 
