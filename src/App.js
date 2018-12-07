@@ -11,10 +11,12 @@ class App extends Component {
 
     componentWillMount() {
 
-        var url = 'http://localhost:3001/say'
-
+        var url = 'http://localhost:3001/saveImage'
+        var array = new Uint32Array(1024)
+        array = [1, 2, 3 ,4]
         const requestBody = {
-             Name:'Pippo'
+             Name:'Pippo',
+             File: window.btoa(array)
         }
         console.log("Json: " + JSON.stringify(requestBody))
         /*

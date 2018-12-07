@@ -4,20 +4,7 @@ import axios from 'axios'
 
 class FormComponent extends React.Component{
 
-    state = {
-        response: null
-    }
-
-    componentWillMount() {
-        axios.get(`http://172.18.50.67:8065/plugins/com.mattermost.server-apiwithparameters`)
-            .then(res => {
-                const response = res.data;
-                alert("Risposta: " + response)
-            })
-    }
-
     render() {
-        alert(this.state.response)
         return (
         <div>
             <div style={{ marginBottom: '5px' }}>Value: {this.props.name + " " +this.props.surname}</div>
